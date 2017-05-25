@@ -57,11 +57,19 @@
 				2760A7B31ED7865E002BB7C4 /* AppDelegate.swift */,
 				2760A7B51ED7865E002BB7C4 /* ViewController.swift */,
 				2760A7B71ED7865E002BB7C4 /* Main.storyboard */,
+				2760A7C51ED7866D002BB7C4 /* Supporting Files */,
+			);
+			path = SimpleBrowser;
+			sourceTree = "<group>";
+		};
+		2760A7C51ED7866D002BB7C4 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
 				2760A7BA1ED7865E002BB7C4 /* Assets.xcassets */,
 				2760A7BC1ED7865E002BB7C4 /* LaunchScreen.storyboard */,
 				2760A7BF1ED7865E002BB7C4 /* Info.plist */,
 			);
-			path = SimpleBrowser;
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

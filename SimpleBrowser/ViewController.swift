@@ -78,14 +78,14 @@ class ViewController: UIViewController, WKNavigationDelegate {
   }
   
   func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-    print("Started provisional navigation. \(debugWV(webView)) nav: \(navigation)")
+    print("-- Started provisional navigation. \(debugWV(webView)) nav: \(navigation)")
     
   }
   
   func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
     let url = navigationAction.request.url!.absoluteString
     
-    print("Deciding policy. action: \(url) -- \(debugWV(webView))")
+    print("-- Deciding policy. action: \(url) type: \(navigationAction.navigationType.hashValue) -- \(debugWV(webView))")
     
     if (url == "about:me") {
       switch (aboutMeState) {
@@ -108,8 +108,21 @@ class ViewController: UIViewController, WKNavigationDelegate {
     decisionHandler(WKNavigationActionPolicy.allow)
   }
   
+  func webView(_ webView: WKWebView, decidePolicyFor response: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
+    print("-- Policy for response. \(debugWV(webView))")
+    decisionHandler(WKNavigationResponsePolicy.allow);
+  }
+  
   func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-    print("Commited navigation. \(debugWV(webView)) nav: \(navigation)")
+    print("-- Commited navigation. \(debugWV(webView)) nav: \(navigation)")
+  }
+  
+  func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
+    print("-- Server redirect. \(debugWV(webView)) nav: \(navigation)")
+  }
+  
+  func webView(_ webView: WKWebView, didFail navigation:WKNavigation!, withError err:Error) {
+    print("-- Failed nav. \(debugWV(webView)) nav: \(navigation)")
   }
   
   func debugWV(_ webView: WKWebView) -> String {
@@ -121,7 +134,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
       initial_url = current.url.absoluteString
     }
     
-    return "[\(index) \(aboutMeState) URL=\(webView.url!) current=(\(current_url) |\(initial_url)) backList=[\(webView.backForwardList.backList.count)]"
+    return "[\(index) \(aboutMeState) URL=\(webView.url!) current=(\(current_url) |\(initial_url)) backList=[\(webView.backForwardList.backList.count)] &current: \(webView.backForwardList.currentItem)"
   }
 
   override func didReceiveMemoryWarning() {

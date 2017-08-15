@@ -12,6 +12,8 @@ import WebKit
 class ViewController: UIViewController, WKNavigationDelegate {
 
   var webView: WKWebView!
+  var alternativeUA: String
+  var useAlternativeUA: Bool
   var index: size_t
   var lastAboutUrl: URL?
   
@@ -29,7 +31,24 @@ class ViewController: UIViewController, WKNavigationDelegate {
     self.webView = WKWebView(frame: CGRect.zero)
     index = 0
     aboutMeState = AboutMeState.START
+    
+    useAlternativeUA = false
+    alternativeUA = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Mobile Safari/537.36";
+    
     super.init(coder: aDecoder)!
+  }
+  
+  func enteredText(_ sender: UITextField) {
+    print("-- enteredText: do nothing");
+  }
+
+  @IBAction func onToggleUA(_ sender: UISwitch) {
+    print("-- Toggle UA value ", sender.isOn, " current value: ", webView.customUserAgent!);
+    if (sender.isOn) {
+      webView.customUserAgent = alternativeUA;
+    } else {
+      webView.customUserAgent = nil;
+    }
   }
   
   @IBAction func textPrimaryActionTriggered(_ sender: UITextField) {
